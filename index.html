@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="/styles/normalize.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <main class="main">
+      <form class="form">
+        <div class="form__elements">
+          <label class="form__label" for="day">Day</label>
+          <input class="form__input" id="day" type="number" min="1" max="31" placeholder="DD"  value="">
+        </div>
+        <div class="form__elements">
+          <label class="form__label" for="month">Month</label>
+          <input class="form__input" id="month" type="number" min="1" max="12" placeholder="MM" value="">
+        </div>
+        <div class="form__elements">
+          <label class="form__label" for="year">Year</label>
+          <input class="form__input" id="year" type="number" min="1950" max="2023" placeholder="YYYY" value="">
+        </div>
+      </form>
+      <button class="button">
+        <img class="button__image" src="./assets/images/icon-arrow.svg" alt="">
+      </button>
+      <div class="output">
+        <p class="output__value"><span id="output__year">--</span> years</p>
+        <p class="output__value"><span id="output__month">--</span> months</p>
+        <p class="output__value"><span id="output__day">--</span> days</p>
+      </div>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>
