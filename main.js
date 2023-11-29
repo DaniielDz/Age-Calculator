@@ -9,17 +9,25 @@ let outputMonth = document.querySelector('#output__month');
 let outputDay = document.querySelector('#output__day');
 
 let submitButton = document.querySelector('.button');
+let formElements = document.querySelectorAll('.form__elements');
 
 submitButton.addEventListener('click', () => {
     añoNac = parseInt(document.querySelector('#year').value);   // Año de nacimiento
     mesNac = parseInt(document.querySelector('#month').value); // Mes de nacimiento
     diaNac = parseInt(document.querySelector('#day').value); // Dia de nacimiento
-    hastaCumpleaños = sumarDias(mesNac, diaNac); 
-    hastaDiaActual = sumarDias(mesAct, diaAct); 
-    Meses = diferenciaMeses(mesNac, mesAct)
-    mostrarDatos();
-} )
 
+    if(añoNac <= añoAct && (mesNac <= 12 && mesNac > 0) && (diaNac <= 31 && diaNac > 0)) {
+        hastaCumpleaños = sumarDias(mesNac, diaNac); 
+        hastaDiaActual = sumarDias(mesAct, diaAct); 
+        Meses = diferenciaMeses(mesNac, mesAct)
+        mostrarDatos();
+    }
+    else {
+        const error = document.createElement("SPAN")
+        error.textContent = "Error"
+        formElements[0].appendChild(error)
+    }
+})
 function sumarDias(mes, dia) {  // Calcular Dias
     const diasMeses = [31, esBisiesto(añoAct) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     let dias = 0;

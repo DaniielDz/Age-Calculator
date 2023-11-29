@@ -56,11 +56,12 @@ body {
     width: 100%;
     height: 5rem;
     padding: 1rem 0 1rem 1rem;
-    border-radius: 1rem;
+    font-size: 1.8rem;
+    border-radius: .5rem;
     border: 1px solid var(--lightGrey);
     outline: none;
-    font-size: 1.8rem;
 }
+.form__input::placeholder { color: var(--SmokeyGrey); }
 .button {
     width: 5rem;  
     height: 5rem;
@@ -86,3 +87,31 @@ body {
     color: var(--OffBlack);
 }
 .output__value span { color: var(--purple); }
+
+@media (min-width: 1024px) {
+    .main {
+        width: 80rem;
+        height: 60rem;
+        padding: 5rem;
+        gap: unset;
+        align-items: flex-start;
+        justify-content: center;
+        border-bottom-right-radius: 20rem;
+    }
+    .form__label { font-size: 1.3rem; }
+    .form__input { 
+        width: 15rem; 
+        height: 6rem; 
+        font-size: 2.5rem;
+    }
+    .button {
+        width: 8rem;  
+        height: 10rem;
+        align-self: flex-end;
+    }
+    .button__image {
+        width: 4rem;
+        height: 4rem;
+    }
+    .output__value { font-size: 10rem; }
+}
