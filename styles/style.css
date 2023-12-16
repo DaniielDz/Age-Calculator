@@ -57,11 +57,16 @@ body {
     height: 5rem;
     padding: 1rem 0 1rem 1rem;
     font-size: 1.8rem;
+    color: #000 !important;
     border-radius: .5rem;
     border: 1px solid var(--lightGrey);
     outline: none;
 }
 .form__input::placeholder { color: var(--SmokeyGrey); }
+.form__input:focus, .form__input:hover {
+    border: 1px solid var(--purple);
+    cursor: pointer;
+}
 .button {
     width: 5rem;  
     height: 5rem;
@@ -76,6 +81,10 @@ body {
     width: 2.5rem;
     height: 2.5rem;
 }
+.button:hover {
+    background-color: var(--OffBlack);
+    cursor: pointer;
+}
 .output {
     width: 100%;
 }
@@ -87,11 +96,17 @@ body {
     color: var(--OffBlack);
 }
 .output__value span { color: var(--purple); }
+.form__error {
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: 100;
+}
+.error { border-color: var(--lightRed); color: var(--lightRed); }
 
 @media (min-width: 1024px) {
     .main {
         width: 80rem;
-        height: 60rem;
+        height: 70rem;
         padding: 5rem;
         gap: unset;
         align-items: flex-start;
@@ -102,10 +117,11 @@ body {
     .form__input { 
         width: 15rem; 
         height: 6rem; 
+        padding: 2rem 0 2rem 2rem;
         font-size: 2.5rem;
     }
     .button {
-        width: 8rem;  
+        width: 10rem;  
         height: 10rem;
         align-self: flex-end;
     }

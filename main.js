@@ -4,29 +4,67 @@ let diaAct = fecha2.getDate();  // Dia Actual
 let mesAct = fecha2.getMonth() + 1; // Mes Actual
 let añoAct = fecha2.getFullYear();  // Año Actual
 
+let añoNac = document.querySelector('#year');   // Año de nacimiento
+let mesNac = document.querySelector('#month'); // Mes de nacimiento
+let diaNac = document.querySelector('#day'); // Dia de nacimiento
+
+
 let outputYear = document.querySelector('#output__year');
 let outputMonth = document.querySelector('#output__month');
 let outputDay = document.querySelector('#output__day');
 
 let submitButton = document.querySelector('.button');
 let formElements = document.querySelectorAll('.form__elements');
+let formInputs = document.querySelectorAll('.form__input');
+let formLabels = document.querySelectorAll('.form__label');
 
 submitButton.addEventListener('click', () => {
-    añoNac = parseInt(document.querySelector('#year').value);   // Año de nacimiento
-    mesNac = parseInt(document.querySelector('#month').value); // Mes de nacimiento
-    diaNac = parseInt(document.querySelector('#day').value); // Dia de nacimiento
+    añoNacimiento = parseInt(añoNac.value);   // Año de nacimiento
+    mesNacimiento = parseInt(mesNac.value);  // Mes de nacimiento
+    diaNacimiento = parseInt(diaNac.value);  // Dia de nacimiento
+  
+    if( !(isNaN(diaNacimiento) && isNaN(mesNacimiento) && isNaN(añoNacimiento)) ) {
+        eliminarErrores(0, 'day');
+        eliminarErrores(1, 'month');
+        eliminarErrores(2, 'year');
 
-    if(añoNac <= añoAct && (mesNac <= 12 && mesNac > 0) && (diaNac <= 31 && diaNac > 0)) {
-        hastaCumpleaños = sumarDias(mesNac, diaNac); 
-        hastaDiaActual = sumarDias(mesAct, diaAct); 
-        Meses = diferenciaMeses(mesNac, mesAct)
-        mostrarDatos();
+        const diasMeses = [31, esBisiesto(añoNacimiento) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        if( diaNacimiento > 0 && diaNacimiento <= diasMeses[mesNacimiento - 1] && añoNacimiento <= añoAct) {
+            process()
+        }
+        else {
+            eliminarErrores(0, 'day');
+            eliminarErrores(1, 'month');
+            eliminarErrores(2, 'year');
+        }
+        if ( diaNacimiento <= 0 || diaNacimiento > 31) {    // verificacion del dia ingresado
+            error(0, "Must be a valid day"); 
+            console.log(diaNacimiento > diasMeses[mesNacimiento - 1] && ((mesNacimiento === 2 || mesNacimiento === 4 || mesNacimiento === 6 || mesNacimiento === 9 || mesNacimiento === 11))) 
+            
+        }
+        else if(diaNacimiento > diasMeses[mesNacimiento - 1] && ((mesNacimiento === 2 || mesNacimiento === 4 || mesNacimiento === 6 || mesNacimiento === 9 || mesNacimiento === 11))) {
+            error(0, "Must be a valid date"); 
+            error(1); 
+            error(2); 
+        }
+        if ( mesNacimiento <= 0 || mesNacimiento > 12) {
+            error(1, "Must be a valid month"); 
+        }
+        if ( añoNacimiento <= 0 || añoNacimiento > añoAct) {
+            error(2, "Must be a valid year"); 
+        }
+        
     }
-    else {
-        const error = document.createElement("SPAN")
-        error.textContent = "Error"
-        formElements[0].appendChild(error)
+    if(isNaN(diaNacimiento)) {
+        error(0, "This field is required");  
     }
+    if(isNaN(mesNacimiento)) {
+        error(1, "This field is required");  
+    }
+    if(isNaN(añoNacimiento)) {
+        error(2, "This field is required");  
+    }
+
 })
 function sumarDias(mes, dia) {  // Calcular Dias
     const diasMeses = [31, esBisiesto(añoAct) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -69,15 +107,48 @@ function esBisiesto(año) {
 }
 function mostrarDatos() {
     if( hastaDiaActual >= hastaCumpleaños ) {
-        outputYear.textContent = añoAct - añoNac;
+        outputYear.textContent = añoAct - añoNacimiento;
         outputDay.textContent = hastaDiaActual - hastaCumpleaños;
     } else {
-        outputYear.textContent = añoAct - añoNac - 1;
+        outputYear.textContent = añoAct - añoNacimiento - 1;
         outputDay.textContent = (hastaDiaActual - hastaCumpleaños) + 365;
     }
-    if( diaAct >= diaNac   ) {
+    if( diaAct >= diaNacimiento   ) {
         outputMonth.textContent = Meses;
     } else {
         outputMonth.textContent = Meses - 1;
+    }
+}
+function process() {
+    hastaCumpleaños = sumarDias(mesNacimiento, diaNacimiento);
+    hastaDiaActual = sumarDias(mesAct, diaAct);
+    Meses = diferenciaMeses(mesNacimiento, mesAct)
+    mostrarDatos();
+}
+
+function error(index, error) {
+    const mensajeError = document.createElement("span");
+    mensajeError.classList.add("form__error", "error");
+    mensajeError.textContent = error;
+    // Intenta eliminar cualquier error existente
+    const existingError = formElements[index].querySelector(".form__error");
+    if (existingError) {
+        existingError.remove();
+    }
+    // Agrega el nuevo elemento de error al formulario
+    formElements[index].appendChild(mensajeError);
+    formInputs[index].classList.add("error");
+    formLabels[index].classList.add('error');
+}
+function eliminarErrores(index, selector) {
+    const existingError = [
+        formElements[index].querySelector(".form__error"),
+        formElements[index].querySelector(`.${selector}`),
+        formElements[index].querySelector(`#${selector}`)
+    ]
+    if(existingError[1].classList.contains('error')){
+        existingError[0].remove();
+        existingError[1].classList.remove("error");
+        existingError[2].classList.remove('error');
     }
 }
